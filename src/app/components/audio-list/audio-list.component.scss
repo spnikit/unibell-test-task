@@ -1,0 +1,15 @@
+
+.audio-table {
+  width: 100%;
+
+  &__row:hover {
+    cursor: pointer;
+    background: whitesmoke;
+  }
+
+  .selected-row {
+    background: #c9d8f1;
+  }
+
+}
+
