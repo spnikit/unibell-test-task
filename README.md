@@ -1,27 +1,19 @@
 # UnibellTestTask
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.1.
+## Задание
+Реализовать проект Angular 2.0, отбражающий единственную страницу, на которой в виде таблицы (mat-table) отражается список звукозаписей.
+Строка таблицы, соответствующая звукозаписи, содержит поля - id, Наименование звука, Имя файла звукозаписи.
+При клике на строке звукозаписи под таблицей отображается простой проигрыватель, с помощью которого выбранный файл может быть воспроизведен.
+Звуки в формате mp3 можно взять с любого публичного сервиса.
+Достаточно отобразить 3-4 произвольных звука.
+Реализованный проект выложить на GIT и предоставить ссылку.
 
-## Development server
+## Итоговый проект
+![img.png](img.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Основной функционал:
+- Запуск проекта после клонирования
+`npm i && npm start`
+- треки выбираются по клику мыши, повторный клин отменяет выбор
+- после выбора клика появляется плеер на котором можно воспроизвести выбранный трек
+- при выборе другого трека или отмены выбора текущее проигрывание останавливается
