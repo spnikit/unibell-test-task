@@ -15,7 +15,19 @@
 
   <!--Row Defs-->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="handleRowClick(row)"
-      [class.selected-row]="row.id === this.selectedRowID"
+  <tr mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="handleRowClick(row)"
+      [class.selected-row]="row.id === this.selectedRowID()"
       class="audio-table__row"></tr>
 </table>
+
+
+@if (!!selectedItem()) {
+  <audio #audio controls [src]="this.selectedItem()?.src">
+  </audio>
+} @else {
+  <h2>Please, select a track</h2>
+}
+
+

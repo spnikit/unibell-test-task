@@ -1,8 +1,18 @@
-import {Component} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  Renderer2,
+  Signal,
+  signal,
+  viewChild
+} from '@angular/core';
 import {MatTableModule} from "@angular/material/table";
-import {MOCK_DATA} from "../../models/mock-data";
 import {AudioItem} from "../../models/audio-item.model";
 import {AUDIO_TABLE_COLUMNS} from "../../models/constants";
+import {AudioStoreService} from "../../services/audio-store.service";
 
 @Component({
   selector: 'app-audio-list',
@@ -14,15 +24,36 @@ import {AUDIO_TABLE_COLUMNS} from "../../models/constants";
   styleUrl: './audio-list.component.scss'
 })
 export class AudioListComponent {
-  protected selectedRowID = ''
-  protected displayedColumns: string[] = AUDIO_TABLE_COLUMNS
-  protected dataSource = MOCK_DATA;
+  selectedRowID = signal('');
+  displayedColumns: string[] = AUDIO_TABLE_COLUMNS
+
+  private store = inject(AudioStoreService).store
+  private renderer2 = inject(Renderer2)
+
+  dataSource = this.store();
+
+  selectedItem = computed(() => {
+    return this.store().find(item => item.id === this.selectedRowID())
+  })
+
+
+  audio: Signal<ElementRef<HTMLAudioElement> | undefined> = viewChild('audio', {read: ElementRef})
 
   handleRowClick(row: AudioItem) {
-    if (row.id === this.selectedRowID) {
-      this.selectedRowID = '';
+    this.resetAudio()
+    if (row.id === this.selectedRowID()) {
+      this.selectedRowID.set('');
       return;
     }
-    this.selectedRowID = row.id;
+
+    this.selectedRowID.set(row.id);
+  }
+
+  resetAudio() {
+    const audioRef = this.audio()?.nativeElement;
+    if (audioRef) {
+      audioRef.pause();
+      audioRef.currentTime = 0;
+    }
   }
 }
