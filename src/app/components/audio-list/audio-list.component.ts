@@ -1,30 +1,28 @@
 import {Component, computed, inject, signal} from '@angular/core';
-import {MatTableModule} from "@angular/material/table";
 import {AudioItem} from "../../models/audio-item.model";
 import {AUDIO_TABLE_COLUMNS} from "../../models/constants";
 import {AudioStoreService} from "../../services/audio-store.service";
 import {AudioPlayerComponent} from "../audio-player/audio-player.component";
+import {AudioTableComponent} from "../audio-table/audio-table.component";
 
 @Component({
   selector: 'app-audio-list',
   standalone: true,
   imports: [
-    MatTableModule,
-    AudioPlayerComponent
+    AudioPlayerComponent,
+    AudioTableComponent
   ],
   templateUrl: './audio-list.component.html',
   styleUrl: './audio-list.component.scss'
 })
 export class AudioListComponent {
-  selectedRowID = signal('');
   displayedColumns: string[] = AUDIO_TABLE_COLUMNS
-  private store = inject(AudioStoreService).store
-  dataSource = this.store();
 
+  selectedRowID = signal('');
+  store = inject(AudioStoreService).store
   selectedItem = computed(() => {
     return this.store().find(item => item.id === this.selectedRowID())
   })
-
 
   handleRowClick(row: AudioItem) {
     if (row.id === this.selectedRowID()) {
@@ -33,6 +31,5 @@ export class AudioListComponent {
     }
     this.selectedRowID.set(row.id);
   }
-
 
 }
