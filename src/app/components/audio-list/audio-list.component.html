@@ -23,9 +23,8 @@
 </table>
 
 
-@if (!!selectedItem()) {
-  <audio #audio controls [src]="this.selectedItem()?.src">
-  </audio>
+@if (selectedItem()) {
+  <app-audio-player [item]="selectedItem()!"/>
 } @else {
   <h2>Please, select a track</h2>
 }
