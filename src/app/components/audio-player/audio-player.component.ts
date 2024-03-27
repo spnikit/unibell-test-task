@@ -1,27 +1,28 @@
-import {Component, effect, ElementRef, input, Signal, viewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {AudioItem} from "../../models/audio-item.model";
 
 @Component({
   selector: 'app-audio-player',
-  standalone: true,
-  imports: [],
   templateUrl: './audio-player.component.html',
-  styleUrl: './audio-player.component.scss'
+  styleUrls: ['./audio-player.component.scss']
 })
 export class AudioPlayerComponent {
 
-  item = input.required<AudioItem>()
-  audio: Signal<ElementRef<HTMLAudioElement> | undefined> = viewChild('audio', {read: ElementRef})
+  private _item!: AudioItem;
 
-  constructor() {
-    effect(() => {
-      this.item();
-      this.resetAudio()
-    });
+  @Input() set item(value: AudioItem) {
+    this._item = value;
+    this.resetAudio()
   }
 
+  get item(): AudioItem {
+    return this._item;
+  }
+
+  @ViewChild('audio', {read: ElementRef}) audio!: ElementRef<HTMLAudioElement>
+
   private resetAudio() {
-    const audioRef = this.audio()?.nativeElement;
+    const audioRef = this.audio?.nativeElement;
     if (audioRef) {
       audioRef.pause();
       audioRef.currentTime = 0;

@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource()" class="audio-table">
+<table mat-table [dataSource]="dataSource" class="audio-table">
   <!--  Column Defs-->
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> No.</th>
@@ -14,10 +14,10 @@
   </ng-container>
 
   <!--Row Defs-->
-  <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row
-      *matRowDef="let row; columns: displayedColumns();"
+      *matRowDef="let row; columns: displayedColumns;"
       (click)="onRowClick(row)"
-      [class.selected-row]="row.id === this.selectedRowID()"
+      [class.selected-row]="row.id === this.selectedRowID"
       class="audio-table__row"></tr>
 </table>

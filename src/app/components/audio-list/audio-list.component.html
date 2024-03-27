@@ -1,14 +1,17 @@
 <app-audio-table
-  [dataSource]="store()"
+  [dataSource]="(store$ | async) || []"
   [displayedColumns]="displayedColumns"
-  [selectedRowID]="selectedRowID()"
+  [selectedRowID]="(selectedRowID$ | async) || ''"
   (rowClick)="handleRowClick($event)"
-/>
+>
+</app-audio-table>
 
-@if (selectedItem()) {
-  <app-audio-player [item]="selectedItem()!"/>
-} @else {
+<ng-container *ngIf="(selectedItem$ | async) as item; else empty">
+  <app-audio-player [item]="item">
+  </app-audio-player>
+</ng-container>
+
+
+<ng-template #empty>
   <h2>Please, select a track</h2>
-}
-
-
+</ng-template>
